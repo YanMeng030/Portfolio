@@ -1,5 +1,5 @@
 module.exports = {
-  siteUrl: 'http://localhost:3000', // 如果你在本地运行，替换为实际端口
+  siteUrl: 'https://yanmeng030.github.io/Portfolio', // 替换为你的实际 GitHub Pages URL
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   robotsTxtOptions: {

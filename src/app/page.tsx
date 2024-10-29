@@ -1,3 +1,7 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 import { About } from '@/components/about';
 import { Contact } from '@/components/contact';
 import { Experience } from '@/components/experience';
@@ -9,14 +13,24 @@ import { SectionDivider } from '@/components/section-divider';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { projectsData } from '@/lib/data';
 
-const Home = async () => {
-  const starsCount = await Promise.all(
-    projectsData.map(async ({ links }) => {
-      const res = await fetch(links.githubApi, { cache: 'no-store' });
-      const data = await res.json();
-      return data.stargazers_count;
-    })
-  );
+const Home = () => {
+  // 为 useState 明确指定类型
+  const [starsCount, setStarsCount] = useState<number[]>([]);
+
+  useEffect(() => {
+    const fetchStars = async () => {
+      const counts = await Promise.all(
+        projectsData.map(async ({ links }) => {
+          const res = await fetch(links.githubApi, { cache: 'no-store' });
+          const data = await res.json();
+          return data.stargazers_count;
+        })
+      );
+      setStarsCount(counts);
+    };
+
+    fetchStars();
+  }, []);
 
   return (
     <>
@@ -25,6 +39,7 @@ const Home = async () => {
         <Intro />
         <SectionDivider />
         <About />
+        {/* 确保 Projects 组件能够接收 starsCount 作为 prop */}
         <Projects starsCount={starsCount} />
         <Experience />
         <Contact />
