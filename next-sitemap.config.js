@@ -1,5 +1,5 @@
 module.exports = {
-  siteUrl: process.env.SITE_URL || '',
+  siteUrl: 'http://localhost:3000', // 如果你在本地运行，替换为实际端口
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   robotsTxtOptions: {
